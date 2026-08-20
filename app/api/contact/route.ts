@@ -27,10 +27,14 @@ export async function POST(request: Request) {
     console.log(`\x1b[33mReceived:\x1b[0m  ${timestamp}`);
     console.log("\x1b[36m====================================================\n\x1b[0m");
 
-    // 2. Log locally in workspace files as backup
-    const filePath = path.join(process.cwd(), "messages.txt");
-    const fileContent = `====================================================\n[✉] NEW CONTACT MESSAGE RECEIVED\n====================================================\nSender:    ${name}\nEmail:     ${email}\nMessage:   ${message}\nReceived:  ${timestamp}\n====================================================\n\n`;
-    await fs.appendFile(filePath, fileContent, "utf-8");
+    // 2. Log locally in workspace files as backup (only works locally)
+    try {
+      const filePath = path.join(process.cwd(), "messages.txt");
+      const fileContent = `====================================================\n[✉] NEW CONTACT MESSAGE RECEIVED\n====================================================\nSender:    ${name}\nEmail:     ${email}\nMessage:   ${message}\nReceived:  ${timestamp}\n====================================================\n\n`;
+      await fs.appendFile(filePath, fileContent, "utf-8");
+    } catch (fsError) {
+      console.log("[ℹ] Local file writing skipped (normal in serverless/read-only hosting environments like Vercel).");
+    }
 
     // 3. Web3Forms Integration: If environment key exists, forward to your email!
     const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
@@ -72,9 +76,10 @@ export async function POST(request: Request) {
       message: `Thank you ${name}! Your message has been logged in Sadik's console.`,
       timestamp: new Date().toISOString(),
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.error("[✗] Contact route error:", error);
     return NextResponse.json(
-      { error: "Invalid request payload" },
+      { error: error?.message || "Invalid request payload" },
       { status: 400 }
     );
   }
