@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sadik | Developer Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#dee0ff",
+                        "inverse-surface": "#2f303a",
+                        "surface-bright": "#fbf8ff",
+                        "surface-tint": "#2545f5",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e7f5",
+                        "primary-container": "#3452ff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#bd3c00",
+                        "surface-container-highest": "#e2e1ef",
+                        "primary-fixed-dim": "#bbc3ff",
+                        "on-secondary-container": "#fffbff",
+                        "on-background": "#1a1b25",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f4f2ff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#3c4ccf",
+                        "inverse-on-surface": "#f1effd",
+                        "tertiary-fixed-dim": "#ffb59c",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#dfe0ff",
+                        "on-tertiary-fixed-variant": "#832700",
+                        "surface": "#fbf8ff",
+                        "secondary-container": "#5767e9",
+                        "on-primary-fixed-variant": "#002bcf",
+                        "outline-variant": "#c4c5d9",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-primary-fixed": "#000e5e",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1a1b25",
+                        "on-tertiary-fixed": "#390c00",
+                        "secondary-fixed-dim": "#bcc2ff",
+                        "on-secondary-fixed-variant": "#2233b9",
+                        "inverse-primary": "#bbc3ff",
+                        "on-error-container": "#93000a",
+                        "background": "#FAFAF9", /* Override per prompt, keeping token */
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#ffe4db",
+                        "primary": "#3452FF", /* Override per prompt, keeping token */
+                        "surface-dim": "#dad9e6",
+                        "on-primary-container": "#e7e7ff",
+                        "surface-container": "#eeecfa",
+                        "outline": "#757688",
+                        "surface-variant": "#e2e1ef",
+                        "on-secondary-fixed": "#000a64",
+                        "on-surface-variant": "#444656",
+                        "tertiary": "#942d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max-width": "1200px",
+                        "section-gap-desktop": "160px",
+                        "section-gap-mobile": "80px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "display-xl-mobile": ["Geist"],
+                        "body-md": ["Geist"],
+                        "display-xl": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display-xl-mobile": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-xl": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-sm": ["13px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; background-color: #FAFAF9; color: #111111; }
+        .hero-fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .btn-primary { background-color: #3452FF; color: white; transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-primary:hover { background-color: #2545f5; transform: scale(0.98); }
+        .btn-secondary { border: 1px solid #c4c5d9; background: transparent; color: #111111; transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-secondary:hover { border-color: #3452FF; color: #3452FF; }
+        .project-frame { border: 1px solid #E7E7E4; box-shadow: 0 4px 20px -5px rgba(0,0,0,0.04); }
+        .tech-chip { border: 1px solid #E7E7E4; background: transparent; padding: 4px 12px; border-radius: 9999px; font-size: 13px; color: #444656; }
+        /* Override primary text colors per prompt to #111111 */
+        .text-on-background { color: #111111; }
+    </style>
+</head>
+<body class="bg-[#FAFAF9] text-[#111111] antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#FAFAF9]/80 backdrop-blur-md border-b border-[#E7E7E4] flat no shadows">
+<div class="flex justify-between items-center max-w-container-max-width mx-auto px-gutter py-4">
+<a class="font-headline-lg text-headline-lg font-bold text-[#111111]" href="#">SM</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#work">Work</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#about">About</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#skills">Skills</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#experience">Experience</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#contact">Contact</a>
+</div>
+<a class="btn-primary px-6 py-2 rounded font-label-sm text-label-sm" href="#">Resume</a>
+</div>
+</nav>
+<main class="pt-32 pb-section-gap-mobile md:pb-section-gap-desktop">
+<!-- Hero Section -->
+<section class="max-w-container-max-width mx-auto px-gutter mb-section-gap-mobile md:mb-section-gap-desktop pt-20">
+<div class="flex flex-col md:flex-row gap-12 items-center">
+<div class="w-full md:w-[55%] flex flex-col gap-8">
+<h1 class="font-display-xl-mobile text-display-xl-mobile md:font-display-xl md:text-display-xl text-[#111111] leading-tight hero-fade-up">
+                        Hi, I'm Sadik —<br/>I build products<br/>for the web.
+                    </h1>
+<p class="font-body-md text-body-md text-[#444656] max-w-lg hero-fade-up delay-100">
+                        I specialize in creating robust, scalable, and intuitive web applications. My focus is on turning complex problems into elegant, performant digital solutions using modern technologies.
+                    </p>
+<div class="flex flex-wrap gap-4 items-center hero-fade-up delay-200">
+<a class="btn-primary px-6 py-3 rounded font-label-sm text-label-sm" href="#work">View Work</a>
+<a class="btn-secondary px-6 py-3 rounded font-label-sm text-label-sm" href="#contact">Get in touch</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-label-sm text-label-sm ml-4" href="#">View Resume →</a>
+</div>
+</div>
+<div class="w-full md:w-[45%] hero-fade-up delay-300">
+<div class="aspect-square bg-[#E7E7E4] rounded flex items-center justify-center project-frame">
+<span class="font-display-xl text-display-xl text-[#111111]/20">SM</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Selected Work -->
+<section class="max-w-container-max-width mx-auto px-gutter mb-section-gap-mobile md:mb-section-gap-desktop reveal" id="work">
+<h2 class="font-headline-lg text-headline-lg text-[#111111] mb-16 border-b border-[#E7E7E4] pb-4">Selected Work</h2>
+<div class="flex flex-col gap-32">
+<!-- CleanMess -->
+<article class="flex flex-col gap-8 reveal">
+<div class="project-frame bg-white rounded p-1">
+<div class="h-8 border-b border-[#E7E7E4] flex items-center px-4 gap-2 bg-[#FAFAF9]">
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+</div>
+<img class="w-full h-auto object-cover rounded-b" data-alt="A clean, minimalist dashboard UI interface with a light theme, showing a grid of tasks and a sidebar. The design features sharp typography, hairline borders, and subtle structural elements against a pristine white background. Accents are in deep indigo blue." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIUUjg-Ow-5uELJ_Oe5URKcgJzEXIAymertEmu87R6Ii8qGIEJ1nZiXieZFAe22Sm2Zw55oZMTgIcz1QHqEdaPz-VhDQ3PVs-SDmyKfH7ySqcW0Mlx3Bfy0Pz-qPTAYRaqqDSInJ45k1bpP93aK0162T-t4d32U2BbLvsIdT8QF3ZmFi13za2sx_tKb3npvjShsNG9tOKXMZtOx0tOTGcgy7J4FfHOE5StyMLQ_PqI2b2-3qVFCVpEXA"/>
+</div>
+<div class="flex flex-col md:flex-row gap-8 justify-between items-start">
+<div class="max-w-2xl">
+<h3 class="font-headline-lg text-headline-lg text-[#111111] mb-4">CleanMess</h3>
+<p class="font-body-md text-body-md text-[#444656] mb-6">A deterministic rotation and backlog management engine designed to streamline household or team chores. It ensures fair distribution and tracks completion with zero ambiguity.</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="tech-chip">React</span>
+<span class="tech-chip">Node.js</span>
+<span class="tech-chip">PostgreSQL</span>
+</div>
+<a class="text-[#3452FF] font-label-sm text-label-sm hover:underline flex items-center gap-1" href="#">
+                                View Project <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- BeatMess -->
+<article class="flex flex-col gap-8 reveal">
+<div class="project-frame bg-white rounded p-1">
+<div class="h-8 border-b border-[#E7E7E4] flex items-center px-4 gap-2 bg-[#FAFAF9]">
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+</div>
+<img class="w-full h-auto object-cover rounded-b" data-alt="A sleek music streaming web application interface in a bright, clean style. It features an array of album covers, a prominent waveform visualization, and minimalist playback controls. The layout is structured with hairline borders and refined typography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuxkpZr4O9Aoc88XqKLnkd1rhT2v0eTAkOQIFXUjIYrirj2Pv51nxmg45pnw8Lb6jdBN8IlBYmG3J7Ev0VaaVNPYwDM6uw5g5GlOlkOA1k7d-ZXLK8zPXwe0yWPP-j3RCMvIz7tFfq800U5pfRLgFb91-04-to9YnCGMAtEsHYBDpj2OS3EUydgTs3GCVs4xLMtLYUY55Xlf7N0EBxzrnyYj_Gos0wqudss-IEYeRTSLr6Q73kxe9vJA"/>
+</div>
+<div class="flex flex-col md:flex-row gap-8 justify-between items-start">
+<div class="max-w-2xl">
+<h3 class="font-headline-lg text-headline-lg text-[#111111] mb-4">BeatMess</h3>
+<p class="font-body-md text-body-md text-[#444656] mb-6">A music discovery platform powered by an implicit-feedback recommendation engine. It analyzes listening habits to surface tracks seamlessly without requiring manual ratings.</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="tech-chip">Next.js</span>
+<span class="tech-chip">Python</span>
+<span class="tech-chip">Redis</span>
+</div>
+<a class="text-[#3452FF] font-label-sm text-label-sm hover:underline flex items-center gap-1" href="#">
+                                View Project <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- RailVista -->
+<article class="flex flex-col gap-8 reveal">
+<div class="project-frame bg-white rounded p-1">
+<div class="h-8 border-b border-[#E7E7E4] flex items-center px-4 gap-2 bg-[#FAFAF9]">
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+<div class="w-2 h-2 rounded-full bg-[#E7E7E4]"></div>
+</div>
+<img class="w-full h-auto object-cover rounded-b" data-alt="A complex, data-dense transportation booking interface showing a train seating map, search parameters, and pricing tables. The design maintains a minimalist aesthetic using strict grid layouts, sharp typography, and subtle indigo highlights against off-white surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnx4Xu9ihgss7LBWWdF82Tow7Y9V0SePirhJmemFjZff5QB09K_yise-TBLCTxMEgDVw_TphKtaJKssMagXaO_sqd9f_rl22tCQ2-0P6--uGCP4WjT3X6Ai7HpmOl8G8uwcCU3Xar62bUoh19plPbpcqpr5gzZTQw5enLdM4mKzpd2BHL8ghFc08hSPJ4XdfkKc7wS97yXFDg9O_CZGQU7_VehGm59dpEo2yP8NEExm82UfyhZCxi_nA"/>
+</div>
+<div class="flex flex-col gap-8">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-[#111111] mb-4">RailVista</h3>
+<p class="font-body-md text-body-md text-[#444656] max-w-3xl">A comprehensive railway booking and management system. Features include a high-performance search algorithm, interactive seat selection, automated ticketing, and an extensive admin dashboard for route management.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-[#E7E7E4] pt-8">
+<div>
+<h4 class="font-label-sm text-label-sm text-[#111111] mb-4 uppercase tracking-widest">Engineering Highlights</h4>
+<ul class="space-y-4 font-body-md text-body-md text-[#444656]">
+<li class="flex gap-2"><span class="text-[#3452FF]">•</span> Homepage &amp; Search optimization</li>
+<li class="flex gap-2"><span class="text-[#3452FF]">•</span> Real-time seat selection concurrency</li>
+<li class="flex gap-2"><span class="text-[#3452FF]">•</span> Secure digital ticket generation</li>
+<li class="flex gap-2"><span class="text-[#3452FF]">•</span> Comprehensive Admin Dashboard</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-[#111111] mb-4 uppercase tracking-widest">Tech Stack</h4>
+<table class="w-full text-left font-body-md text-body-md text-[#444656]">
+<tbody class="divide-y divide-[#E7E7E4]">
+<tr><td class="py-2 pr-4 font-medium text-[#111111]">Frontend</td><td class="py-2">Vue.js, Tailwind CSS</td></tr>
+<tr><td class="py-2 pr-4 font-medium text-[#111111]">Backend</td><td class="py-2">Go, gRPC</td></tr>
+<tr><td class="py-2 pr-4 font-medium text-[#111111]">Database</td><td class="py-2">MongoDB, Redis</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<a class="text-[#3452FF] font-label-sm text-label-sm hover:underline flex items-center gap-1" href="#">
+                            View Project <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- About -->
+<section class="max-w-container-max-width mx-auto px-gutter mb-section-gap-mobile md:mb-section-gap-desktop reveal" id="about">
+<h2 class="font-headline-lg text-headline-lg text-[#111111] mb-16 border-b border-[#E7E7E4] pb-4">About</h2>
+<div class="max-w-[500px]">
+<p class="font-body-md text-body-md text-[#444656] mb-8">
+                    I am a software engineer focused on building robust, scalable web applications. My approach combines strong computer science fundamentals with an eye for clean, minimalist design, ensuring that the products I build are both functional and visually refined.
+                </p>
+<div class="space-y-6">
+<div class="flex gap-4 items-start">
+<span class="font-label-sm text-label-sm text-[#111111] w-24 shrink-0 uppercase tracking-widest mt-1">Simplicity</span>
+<p class="font-body-md text-body-md text-[#444656]">I believe in reducing complexity. The best code is code that doesn't need to be written.</p>
+</div>
+<div class="flex gap-4 items-start">
+<span class="font-label-sm text-label-sm text-[#111111] w-24 shrink-0 uppercase tracking-widest mt-1">Structure</span>
+<p class="font-body-md text-body-md text-[#444656]">Architecture matters. I design systems that can scale and be maintained easily over time.</p>
+</div>
+<div class="flex gap-4 items-start">
+<span class="font-label-sm text-label-sm text-[#111111] w-24 shrink-0 uppercase tracking-widest mt-1">Impact</span>
+<p class="font-body-md text-body-md text-[#444656]">Technology is a tool. My goal is always to deliver tangible value to the end user.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills & DSA -->
+<section class="max-w-container-max-width mx-auto px-gutter mb-section-gap-mobile md:mb-section-gap-desktop grid grid-cols-1 md:grid-cols-2 gap-16 reveal" id="skills">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-[#111111] mb-12 border-b border-[#E7E7E4] pb-4">Skills</h2>
+<div class="space-y-8">
+<div>
+<h3 class="font-label-sm text-label-sm text-[#111111] mb-4 uppercase tracking-widest">Frontend</h3>
+<div class="flex flex-wrap gap-2">
+<span class="tech-chip">React</span><span class="tech-chip">Next.js</span><span class="tech-chip">Vue</span><span class="tech-chip">TypeScript</span><span class="tech-chip">Tailwind CSS</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-[#111111] mb-4 uppercase tracking-widest">Backend</h3>
+<div class="flex flex-wrap gap-2">
+<span class="tech-chip">Node.js</span><span class="tech-chip">Python</span><span class="tech-chip">Go</span><span class="tech-chip">PostgreSQL</span><span class="tech-chip">MongoDB</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-[#111111] mb-4 uppercase tracking-widest">Tools &amp; Cloud</h3>
+<div class="flex flex-wrap gap-2">
+<span class="tech-chip">Git</span><span class="tech-chip">Docker</span><span class="tech-chip">AWS</span><span class="tech-chip">Vercel</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-[#f5f5f4] p-8 border border-[#E7E7E4] rounded flex flex-col justify-center">
+<span class="material-symbols-outlined text-[32px] text-[#3452FF] mb-4">code_blocks</span>
+<h3 class="font-headline-lg text-headline-lg text-[#111111] mb-4">Data Structures &amp; Algorithms</h3>
+<p class="font-body-md text-body-md text-[#444656] mb-8">Beyond the UI, I care deeply about how things work under the hood. I regularly practice problem-solving to write more efficient and optimized code.</p>
+<a class="btn-secondary self-start px-6 py-2 rounded font-label-sm text-label-sm inline-flex items-center gap-2" href="#">
+                    LeetCode Profile <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+</section>
+<!-- Experience & Education -->
+<section class="max-w-container-max-width mx-auto px-gutter mb-section-gap-mobile md:mb-section-gap-desktop grid grid-cols-1 md:grid-cols-2 gap-16 reveal" id="experience">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-[#111111] mb-12 border-b border-[#E7E7E4] pb-4">Experience</h2>
+<div class="space-y-8 border-l border-[#E7E7E4] pl-6 ml-2 relative">
+<div class="relative">
+<div class="absolute w-3 h-3 bg-[#FAFAF9] border-2 border-[#3452FF] rounded-full -left-[31px] top-1"></div>
+<h3 class="font-body-md text-body-md font-semibold text-[#111111]">Software Engineer Intern</h3>
+<p class="font-label-sm text-label-sm text-[#444656] mb-2 mt-1">VaultofCodes • 2023</p>
+<p class="font-body-md text-body-md text-[#444656]">Developed and maintained core features for internal management tools, improving team workflow efficiency by 20%.</p>
+</div>
+<div class="relative">
+<div class="absolute w-3 h-3 bg-[#E7E7E4] rounded-full -left-[31px] top-1"></div>
+<h3 class="font-body-md text-body-md font-semibold text-[#111111]">Virtual Experience Program</h3>
+<p class="font-label-sm text-label-sm text-[#444656] mb-2 mt-1">Forage • 2022</p>
+<p class="font-body-md text-body-md text-[#444656]">Completed simulated tasks focused on software architecture and system design principles.</p>
+</div>
+<div class="relative">
+<div class="absolute w-3 h-3 bg-[#E7E7E4] rounded-full -left-[31px] top-1"></div>
+<h3 class="font-body-md text-body-md font-semibold text-[#111111]">Certifications</h3>
+<p class="font-body-md text-body-md text-[#444656] mt-2">AWS Certified Cloud Practitioner<br/>Meta Front-End Developer Professional</p>
+</div>
+</div>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-[#111111] mb-12 border-b border-[#E7E7E4] pb-4">Education</h2>
+<div class="space-y-8">
+<div class="pb-6 border-b border-[#E7E7E4]">
+<h3 class="font-body-md text-body-md font-semibold text-[#111111]">Bachelor of Technology in Computer Science</h3>
+<div class="flex justify-between items-center mt-1">
+<span class="font-body-md text-body-md text-[#444656]">University Name</span>
+<span class="font-label-sm text-label-sm text-[#444656]">2020 - 2024</span>
+</div>
+</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-[#111111]">Higher Secondary Education</h3>
+<div class="flex justify-between items-center mt-1">
+<span class="font-body-md text-body-md text-[#444656]">School Name</span>
+<span class="font-label-sm text-label-sm text-[#444656]">2018 - 2020</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact -->
+<section class="max-w-container-max-width mx-auto px-gutter mb-16 text-center reveal" id="contact">
+<h2 class="font-display-xl-mobile text-display-xl-mobile md:font-display-xl md:text-display-xl text-[#111111] mb-6">Let's build something.</h2>
+<p class="font-body-md text-body-md text-[#444656] mb-10 max-w-lg mx-auto">Currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+<a class="btn-primary px-8 py-4 rounded font-label-sm text-label-sm inline-block mb-16" href="mailto:hello@sadik.dev">Let's talk</a>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap-mobile md:py-section-gap-desktop bg-[#FAFAF9] border-t border-[#E7E7E4] flat no shadows Transition-all ease-in-out">
+<div class="max-w-container-max-width mx-auto px-gutter flex flex-col items-center text-center gap-base">
+<span class="font-headline-lg text-headline-lg text-[#111111] mb-4">SM</span>
+<div class="flex gap-6 mb-6">
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#">LinkedIn</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#">GitHub</a>
+<a class="text-[#444656] hover:text-[#3452FF] transition-colors duration-150 font-body-md text-body-md" href="#">X</a>
+</div>
+<p class="font-body-md text-body-md text-[#444656]">© 2024 Sadik. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Scroll Reveal Logic
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body></html>
