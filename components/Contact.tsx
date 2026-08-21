@@ -24,12 +24,12 @@ export default function Contact() {
     setToast({ show: true, title, message });
   };
 
-  // Auto-hide toast notification after 4.5 seconds
+  // Auto-hide toast notification after 6 seconds
   useEffect(() => {
     if (toast?.show) {
       const timer = setTimeout(() => {
         setToast(null);
-      }, 4500);
+      }, 6000);
       return () => clearTimeout(timer);
     }
   }, [toast]);
@@ -51,13 +51,30 @@ export default function Contact() {
     );
   };
 
+  const closeForm = () => {
+    const wasSuccess = formStatus === "success";
+    const userName = formData.name;
+    
+    setIsFormOpen(false);
+    setFormStatus("idle");
+    setLogs([]);
+    
+    if (wasSuccess) {
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => {
+        showToastNotification(
+          "Message Sent Successfully!",
+          `Thank you ${userName || "there"}, your message was successfully sent to Sadik.`
+        );
+      }, 150);
+    }
+  };
+
   // Close on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setIsFormOpen(false);
-        setFormStatus("idle");
-        setLogs([]);
+        closeForm();
       }
     };
 
@@ -70,13 +87,11 @@ export default function Contact() {
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isFormOpen]);
+  }, [isFormOpen, formStatus, formData.name]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      setIsFormOpen(false);
-      setFormStatus("idle");
-      setLogs([]);
+      closeForm();
     }
   };
 
@@ -145,11 +160,7 @@ export default function Contact() {
       ]);
       setFormStatus("success");
       
-      // Trigger success toast notification!
-      showToastNotification(
-        "Message Transmitted!",
-        `Connection established. Thank you ${formData.name}, your message was successfully sent to Sadik.`
-      );
+
     } catch (error: any) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       setLogs((prev) => [
@@ -212,15 +223,15 @@ export default function Contact() {
       
       {/* Premium Toast Notification Popup */}
       {toast && (
-        <div className="fixed top-6 right-6 z-50 max-w-sm w-full bg-card/95 border border-border-muted rounded-2xl shadow-2xl p-4 flex items-start gap-3 animate-slide-in-right backdrop-blur-md">
-          <div className="p-2 bg-primary/10 rounded-xl text-primary shrink-0">
-            <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+        <div className="fixed top-6 right-4 left-4 md:left-auto md:right-6 z-[100] max-w-md bg-card/95 border border-emerald-500/20 dark:border-emerald-500/30 rounded-2xl shadow-[0_20px_50px_rgba(16,185,129,0.15)] p-5 flex items-start gap-4 animate-slide-in-right backdrop-blur-md">
+          <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-500 shrink-0">
+            <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <div className="flex flex-col gap-1 text-left">
-            <h4 className="text-xs font-bold text-text-primary leading-none">{toast.title}</h4>
-            <p className="text-[10px] text-text-secondary leading-relaxed">{toast.message}</p>
+            <h4 className="text-sm sm:text-base font-bold text-text-primary leading-none">{toast.title}</h4>
+            <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mt-1">{toast.message}</p>
           </div>
         </div>
       )}
@@ -305,11 +316,7 @@ export default function Contact() {
                 Transmit Message
               </h3>
               <button
-                onClick={() => {
-                  setIsFormOpen(false);
-                  setFormStatus("idle");
-                  setLogs([]);
-                }}
+                onClick={closeForm}
                 className="p-1 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-low border border-transparent hover:border-border-muted transition-all duration-150"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -419,12 +426,7 @@ export default function Contact() {
                         Message dispatched successfully.
                       </div>
                       <Button
-                        onClick={() => {
-                          setIsFormOpen(false);
-                          setFormData({ name: "", email: "", message: "" });
-                          setFormStatus("idle");
-                          setLogs([]);
-                        }}
+                        onClick={closeForm}
                         variant="secondary"
                         className="px-4 py-2 text-[10px] font-mono border-emerald-500/30 text-emerald-400 hover:border-emerald-400 hover:text-emerald-300"
                       >
