@@ -39,6 +39,39 @@ export async function POST(request: Request) {
     // Note: Web3Forms is called directly from the client (components/Contact.tsx)
     // to comply with free plan limitations and prevent server-side 403 blocks.
 
+    // 3. Telegram Bot Integration: Send instant push notification
+    const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
+    const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+
+    if (telegramToken && telegramChatId) {
+      try {
+        const text = `✉️ *NEW PORTFOLIO MESSAGE!*\n\n*👤 Name:* ${name}\n*📧 Email:* ${email}\n*🕒 Time:* ${timestamp}\n\n*📝 Message:*\n${message}`;
+        
+        const tgResponse = await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chat_id: telegramChatId,
+            text: text,
+            parse_mode: "Markdown",
+          }),
+        });
+
+        if (!tgResponse.ok) {
+          const tgErrorData = await tgResponse.json();
+          console.warn("[⚠️] Telegram notification warning:", tgErrorData.description || "Unknown error");
+        } else {
+          console.log("[✓] Telegram notification sent successfully!");
+        }
+      } catch (tgErr) {
+        console.error("[✗] Telegram API network error:", tgErr);
+      }
+    } else {
+      console.log("[ℹ] Telegram credentials not configured. Skipping Telegram notification.");
+    }
+
     return NextResponse.json({
       status: 200,
       message: `Thank you ${name}! Your message has been logged in Sadik's console.`,
