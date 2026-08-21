@@ -109,7 +109,7 @@ export default function AskWidget() {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
               <h3 className="text-xs font-mono font-bold text-text-primary uppercase tracking-wider">
-                Ask About Sadik (AI)
+                Ask About Sadik
               </h3>
             </div>
             
@@ -208,22 +208,22 @@ export default function AskWidget() {
       {/* Floating Collapse Chat Bubble Trigger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Ask AI about Sadik"
-        className="w-12 h-12 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center shadow-xl hover:scale-105 transition-all duration-200 cursor-pointer relative group"
+        aria-label="Ask about Sadik"
+        className="w-14 h-14 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center shadow-xl hover:scale-105 transition-all duration-200 cursor-pointer relative group"
       >
         {isOpen ? (
-          <svg className="w-5 h-5 transition-transform group-hover:rotate-90 duration-200" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+          <svg className="w-6 h-6 transition-transform group-hover:rotate-90 duration-200" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <div className="relative">
-            <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+          <>
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
-            {/* Subtle blue ping notification dot */}
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border border-white animate-ping"></span>
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border border-white"></span>
-          </div>
+            {/* Notification Green Dot positioned relative to the outer button */}
+            <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white dark:border-[#0B0B0D] animate-ping"></span>
+            <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white dark:border-[#0B0B0D]"></span>
+          </>
         )}
       </button>
     </div>
