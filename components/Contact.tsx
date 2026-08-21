@@ -98,29 +98,50 @@ export default function Contact() {
       setLogs((prev) => [...prev, "[✓] Message details verified.", "Sending message..."]);
       setFormStatus("transmitting");
 
-      // Step 2: Make actual network request
-      const response = await fetch("/api/contact", {
+      // Step 2: Make actual network request to Web3Forms directly (Client-side)
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "29d571a4-a309-47aa-baf9-53550f7bf176",
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `New Portfolio Message from ${formData.name}`,
+          from_name: "Sadik Mondal Portfolio",
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Server error");
+        throw new Error(data.message || "Failed to send email via Web3Forms.");
       }
 
-      // Step 3: Complete transmission & display success message
+      // Step 3: Trigger local background logging (for terminal output & messages.txt)
+      try {
+        await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+      } catch (localLogErr) {
+        console.warn("Local logging API call failed:", localLogErr);
+      }
+
+      // Step 4: Complete transmission & display success message
       await new Promise((resolve) => setTimeout(resolve, 600));
       setLogs([
         "Connecting to server...",
         "[✓] Message details verified.",
         "Sending message...",
         "[✓] Server response: 200 OK",
-        `[✓] Success! Thank you ${formData.name}, your message is logged.`
+        `[✓] Success! Thank you ${formData.name}, your message is logged.`,
       ]);
       setFormStatus("success");
       
@@ -133,7 +154,7 @@ export default function Contact() {
       await new Promise((resolve) => setTimeout(resolve, 500));
       setLogs((prev) => [
         ...prev,
-        `[✗] Error: ${error.message || "Failed to send message."}`
+        `[✗] Error: ${error.message || "Failed to send message."}`,
       ]);
       setFormStatus("idle");
       showToastNotification(

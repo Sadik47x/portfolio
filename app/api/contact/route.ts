@@ -36,40 +36,8 @@ export async function POST(request: Request) {
       console.log("[ℹ] Local file writing skipped (normal in serverless/read-only hosting environments like Vercel).");
     }
 
-    // 3. Web3Forms Integration: If environment key exists, forward to your email!
-    const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
-    
-    if (accessKey) {
-      try {
-        const web3formsResponse = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            access_key: accessKey,
-            name: name,
-            email: email,
-            message: message,
-            subject: `New Portfolio Message from ${name}`,
-            from_name: "Sadik Mondal Portfolio"
-          })
-        });
-
-        const web3formsResult = await web3formsResponse.json();
-
-        if (!web3formsResponse.ok) {
-          console.warn("[⚠️] Web3Forms API warning:", web3formsResult.message || "Failed to dispatch email");
-        } else {
-          console.log("[✓] Web3Forms email dispatched successfully!");
-        }
-      } catch (err) {
-        console.error("[✗] Web3Forms API network error:", err);
-      }
-    } else {
-      console.log("[ℹ] env.WEB3FORMS_ACCESS_KEY not configured. Falling back to local logging only.");
-    }
+    // Note: Web3Forms is called directly from the client (components/Contact.tsx)
+    // to comply with free plan limitations and prevent server-side 403 blocks.
 
     return NextResponse.json({
       status: 200,
