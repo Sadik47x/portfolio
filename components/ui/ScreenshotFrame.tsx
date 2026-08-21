@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 type Screenshot = {
   src: string;
@@ -22,6 +22,74 @@ export default function ScreenshotFrame({
   layoutType = "desktop",
 }: ScreenshotFrameProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef(false);
+
+  // Scroll the snap container to the specified index
+  const scrollToSlide = (index: number) => {
+    if (containerRef.current) {
+      isScrollingRef.current = true;
+      const slideWidth = containerRef.current.clientWidth;
+      containerRef.current.scrollTo({
+        left: index * slideWidth,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
+      // Reset the scrolling lock after animation completes
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 500);
+    }
+  };
+
+  const nextSlide = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const nextIdx = (currentIndex + 1) % screenshots.length;
+    scrollToSlide(nextIdx);
+  };
+
+  const prevSlide = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const prevIdx = (currentIndex - 1 + screenshots.length) % screenshots.length;
+    scrollToSlide(prevIdx);
+  };
+
+  const selectSlide = (index: number, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    scrollToSlide(index);
+  };
+
+  // Sync currentIndex when the user scrolls natively
+  const handleScroll = () => {
+    if (isScrollingRef.current) return;
+    if (containerRef.current) {
+      const { scrollLeft, clientWidth } = containerRef.current;
+      if (clientWidth > 0) {
+        const newIndex = Math.round(scrollLeft / clientWidth);
+        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < screenshots.length) {
+          setCurrentIndex(newIndex);
+        }
+      }
+    }
+  };
+
+  // Keep scroll position aligned on resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        isScrollingRef.current = true;
+        const slideWidth = containerRef.current.clientWidth;
+        containerRef.current.scrollLeft = currentIndex * slideWidth;
+        isScrollingRef.current = false;
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [currentIndex]);
 
   if (!screenshots || screenshots.length === 0) {
     return (
@@ -32,24 +100,6 @@ export default function ScreenshotFrame({
       </div>
     );
   }
-
-  const nextSlide = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % screenshots.length);
-  };
-
-  const prevSlide = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length);
-  };
-
-  const selectSlide = (index: number, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex(index);
-  };
 
   // Convert url to a clean format for browser address bar, e.g. "cleanmess.app"
   const cleanUrl = url
@@ -69,14 +119,16 @@ export default function ScreenshotFrame({
             <div className="w-1 h-1 bg-[#0a0a0a] rounded-full"></div>
           </div>
           
-          {/* Screen Content */}
-          <div className="relative w-full h-full bg-[#111111] overflow-hidden rounded-[1.8rem] md:rounded-[2.2rem]">
+          {/* Screen Content (Scroll-snap swipeable container) */}
+          <div 
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="w-full h-full bg-[#111111] rounded-[1.8rem] md:rounded-[2.2rem] flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"
+          >
             {screenshots.map((shot, idx) => (
               <div
                 key={shot.src}
-                className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${
-                  idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-                }`}
+                className="w-full h-full shrink-0 snap-center snap-always relative"
               >
                 <Image
                   src={shot.src}
@@ -91,7 +143,7 @@ export default function ScreenshotFrame({
           </div>
         </div>
 
-        {/* Carousel controls - placed on the outer canvas for easy interaction */}
+        {/* Carousel controls */}
         {screenshots.length > 1 && (
           <>
             <button
@@ -113,7 +165,7 @@ export default function ScreenshotFrame({
               </svg>
             </button>
 
-            {/* Pagination indicators on the canvas */}
+            {/* Pagination indicators */}
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 bg-card/80 backdrop-blur-sm border border-border-muted px-2.5 py-1 rounded-full shadow-sm">
               {screenshots.map((_, idx) => (
                 <button
@@ -156,25 +208,29 @@ export default function ScreenshotFrame({
         <div className="w-1/4"></div>
       </div>
 
-      {/* Screen area with image and controls */}
-      <div className="relative aspect-video w-full overflow-hidden bg-background dark:bg-[#0B0B0D] flex items-center justify-center">
-        {screenshots.map((shot, idx) => (
-          <div
-            key={shot.src}
-            className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${
-              idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-            }`}
-          >
-            <Image
-              src={shot.src}
-              alt={shot.alt}
-              fill
-              priority={idx === 0}
-              className="object-cover object-top rounded-b-xl select-none"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1120px"
-            />
-          </div>
-        ))}
+      {/* Screen area with scroll-snap swipeable container */}
+      <div className="relative aspect-video w-full overflow-hidden bg-background dark:bg-[#0B0B0D] rounded-b-xl">
+        <div 
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar rounded-b-xl"
+        >
+          {screenshots.map((shot, idx) => (
+            <div
+              key={shot.src}
+              className="w-full h-full shrink-0 snap-center snap-always relative rounded-b-xl"
+            >
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                fill
+                priority={idx === 0}
+                className="object-cover object-top rounded-b-xl select-none"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1120px"
+              />
+            </div>
+          ))}
+        </div>
 
         {/* Navigation arrows (shown on hover if multiple images) */}
         {screenshots.length > 1 && (

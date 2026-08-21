@@ -128,7 +128,7 @@ export default function WorkSection() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full md:h-[1200vh]">
+    <div ref={containerRef} className="relative w-full md:h-[1600vh]">
       <div className="relative md:sticky md:top-0 md:left-0 w-full h-auto md:h-screen overflow-visible md:overflow-hidden bg-background flex flex-col justify-center md:z-20">
         
         {/* Layer 0: Work Intro */}
