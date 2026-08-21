@@ -56,7 +56,7 @@ export async function POST(request: Request) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model: "groq/compound-mini",
         max_tokens: 300,
         temperature: 0.1, // Low temperature for high factual precision
         messages: [
