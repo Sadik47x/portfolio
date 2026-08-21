@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import AskWidget from "@/components/AskWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,6 +55,7 @@ export default function RootLayout({
     >
       <body className="antialiased bg-[#FAFAF9] text-[#111111] dark:bg-[#0B0B0D] dark:text-[#F5F5F4] transition-colors duration-300 min-h-screen flex flex-col">
         {children}
+        <AskWidget />
       </body>
     </html>
   );
